@@ -1,0 +1,151 @@
+
+/* ---------------------------------------Navbar --------------------------------------- */
+
+.nav-menu-toggle{
+    color: #F97316 !important;
+}
+
+
+/* ---------------------------------------Sidebar --------------------------------------- */
+
+.sidebar-menu-toggle{
+    background-color: #F97316 !important;
+    border-radius: 50% !important;
+}
+
+.bg-menu-theme .menu-inner > .menu-item.active > .menu-link {
+    color: #F97316 !important;
+    background-color: #faf1ea !important;
+}
+
+.bg-menu-theme .menu-inner > .menu-item.active:before {
+background: #F97316 !important;
+}
+
+
+/* ---------------------------------------Body --------------------------------------- */
+
+/* body{
+    background-color: #faf1ea !important;
+} */
+
+/* ---------------------------------------Footer --------------------------------------- */
+
+/* .footer-theme{
+    background-color: #faf1ea !important;
+} */
+
+
+/* ---------------------------------------Time Entry --------------------------------------- */
+
+.time-display {
+    text-align: center;
+    color: #ff7a00;
+    font-weight: bold;
+}
+.date-text {
+    text-align: center;
+    font-style: italic;
+    color: #ff7a00;
+}
+.btn-time-in {
+    border-radius: 10px !important;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
+    background-color: #ff7a00 !important;
+    color: white !important;
+    border: none !important;
+    width: 175px !important;
+    height: 49px !important;
+    border: 1px solid #ff7a00 !important;
+   
+}
+.btn-time-in-pm {
+    border-radius: 10px !important;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
+    background-color: #FFC021 !important;
+    color: white !important;
+    border: none !important;
+    width: 175px !important;
+    height: 49px !important;
+    border: 1px solid #FFC021 !important;
+   
+}
+
+.btn-time-out {
+    border-radius: 10px !important;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
+    background-color: #FC2323 !important;
+    color: white !important;
+    border: none !important;
+    width: 175px !important;
+    height: 49px !important;
+    border: 1px solid #FC2323 !important;
+    
+}
+.btn-time-out-pm {
+    border-radius: 10px !important;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
+    background-color: #9A23FC !important;
+    color: white !important;
+    border: none !important;
+    width: 175px !important;
+    height: 49px !important;
+    border: 1px solid #9A23FC !important;
+    
+}
+.record-card {
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    background: white;
+}
+
+/* ---------------------------------------Time Sheet --------------------------------------- */
+
+
+.page-item.active .page-link, .page-item.active .page-link:hover, .page-item.active .page-link:focus,
+.pagination li.active > a:not(.page-link),
+.pagination li.active > a:not(.page-link):hover,
+.pagination li.active > a:not(.page-link):focus {
+  border-color: #ff7a00 !important;
+  background-color: #ff7a00 !important;
+  color: #fff !important;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #ff7a00 !important;
+    border-color: #ff7a00 !important;
+}
+
+.btn-custom {
+    background-color: #ff7a00 !important;
+    border-color: #ff7a00 !important;
+    color: white !important;
+    border-radius: 10px !important;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
+    width: 100px !important;
+    height: 40px !important;
+    border: 1px solid #ff7a00 !important;
+    width: 100px !important;
+    height: 40px !important;
+    border: 1px solid #ff7a00 !important;
+}
+
+.edit-btn{
+    border-color: #ff7a00 !important;
+    color: #ff7a00 !important;
+    border-radius: 10px !important;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-time-in:disabled,
+.btn-time-out:disabled,
+.btn-time-in-pm:disabled,
+.btn-time-out-pm:disabled {
+    background-color: #808080 !important;  /* gray color */
+    opacity: 0.65;
+    cursor: not-allowed;
+    border: 1px solid #808080 !important;
+}
