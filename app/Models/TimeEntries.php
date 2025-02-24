@@ -15,15 +15,15 @@ class TimeEntries extends Model
         'user_id',
         'shift_schedule_id',
         'date',
-        'time_in',
-        'time_out',
-        'break_out',
-        'break_in',
+        'am_time_in',
+        'am_time_out',
+        'pm_time_in',
+        'pm_time_out',
         'rendered_hours',
-        'late',
+        'late_hours',
         'undertime',
         'excess_minutes',
-        'status',
+        'remarks',
     ];
 
     public function shiftSchedule()

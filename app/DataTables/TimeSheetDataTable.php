@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\TimeEntries;
 use App\Models\TimeSheet;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\EloquentDataTable;
@@ -24,25 +25,28 @@ class TimeSheetDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->setRowId('id')
+            ->editColumn('id', function ($row) {
+                return $row->id ?? '';
+            })
             ->addColumn('Day', function ($row) {
-                $dateParts = explode(' ', $row->date);
-                return '<div style="">
-                            <div style="font-weight: bold;">' . $dateParts[0] . '</div>
-                            <div>' . $dateParts[1] . ' ' . $dateParts[2] . '</div>
-                        </div>';
+                if ($row->created_at) {
+                    return $row->created_at->format('D, M d');
+                } else {
+                    return Carbon::parse($row->temp_date)->format('D, M d');
+                }
+                
             })
-            ->editColumn('time_in', function ($row) {
-                return $row->time_in ?? '';
+            ->editColumn('am_time_in', function ($row) {
+                return $row->am_time_in ? Carbon::parse($row->am_time_in)->format('H:i') : '';
             })
-            ->editColumn('time_out', function ($row) {
-                return $row->time_out ?? '';
+            ->editColumn('pm_time_out', function ($row) {
+                return $row->pm_time_out ?? '';
             })
-            ->editColumn('break_out', function ($row) {
-                return $row->break_out ?? '';
+            ->editColumn('am_time_out', function ($row) {
+                return $row->am_time_out ?? '';
             })
-            ->editColumn('break_in', function ($row) {
-                return $row->break_in ?? '';
+            ->editColumn('pm_time_in', function ($row) {
+                return $row->pm_time_in ?? '';
             })
             ->editColumn('rendered_hours', function ($row) {
                 return $row->rendered_hours ?? '0.0.0';
@@ -50,20 +54,20 @@ class TimeSheetDataTable extends DataTable
             ->editColumn('excess_minutes', function ($row) {
                 return $row->excess_minutes ?? '0.0.0';
             })
-            ->editColumn('late', function ($row) {
-                return $row->late ?? '0.0.0';
+            ->editColumn('late_hours', function ($row) {
+                return $row->late_hours ?? '0.0.0';
             })
-            ->editColumn('status', function ($row) {
-                return $row->status ?? '';
+            ->editColumn('remarks', function ($row) {
+                return $row->remarks ?? '';
             })
             ->addColumn('Edit', function ($row) {
                 return '<button class="btn btn-custom">Edit</button>';
             })
+            ->addColumn('attachments', function ($row) {
+                return '';
+            })
             ->rawColumns(['Day', 'Edit']);
 
-
-        
-            // ->addColumn('action', 'timesheet.action');
     }
 
     /**
@@ -73,20 +77,23 @@ class TimeSheetDataTable extends DataTable
     {
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
         $dates = [];
-        
+    
         for ($day = 1; $day <= $daysInMonth; $day++) {
             $date = now()->startOfMonth()->addDays($day - 1);
             $dates[] = [
-                'id' => $day,
-                'date' => $date->format('D, M d'),
+                'day' => $day,
+                'date' => $date->format('Y-m-d'),
             ];
         }
         
+        $tempDatesQuery = implode(' UNION ALL SELECT ', array_map(function($date) {
+            return "'{$date['day']}' as day, '{$date['date']}' as date";
+        }, $dates));
+        
         return $model->newQuery()
-            ->select('*')
-            ->from(DB::raw('(SELECT ' . implode(' UNION ALL SELECT ', array_map(function($date) {
-                return "'{$date['id']}' as id, '{$date['date']}' as date";
-            }, $dates)) . ') as temp_dates'));
+            ->select('time_entries.*', 'temp_dates.day as temp_day', 'temp_dates.date as temp_date')
+            ->from(DB::raw("(SELECT $tempDatesQuery) as temp_dates"))
+            ->leftJoin('time_entries', DB::raw('DATE(time_entries.created_at)'), '=', 'temp_dates.date');
     }
 
     /**
@@ -95,7 +102,7 @@ class TimeSheetDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('timesheet-table')
+                    ->setTableId('timesheetTable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('rtip')
@@ -113,14 +120,14 @@ class TimeSheetDataTable extends DataTable
         return [
             Column::make('id')->hidden(),
             Column::make('Day'),
-            Column::make('time_in'),
-            Column::make('break_out'),
-            Column::make('break_in'),
-            Column::make('time_out'),
+            Column::make('am_time_in'),
+            Column::make('am_time_out'),
+            Column::make('pm_time_in'),
+            Column::make('pm_time_out'),
             Column::make('rendered_hours'),
             Column::make('excess_minutes'),
-            Column::make('late'),
-            Column::make('status'),
+            Column::make('late_hours'),
+            Column::make('remarks'),
             Column::make('Edit'),
             // Column::make('Action'),
         ];

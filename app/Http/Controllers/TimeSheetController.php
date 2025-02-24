@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\TimeSheetDataTable;
+use App\Models\TimeEntries;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB ;
 
 class TimeSheetController extends Controller
 {

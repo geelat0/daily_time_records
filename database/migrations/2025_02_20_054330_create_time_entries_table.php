@@ -22,7 +22,7 @@ return new class extends Migration
             $table->time('rendered_hours')->nullable();
             $table->time('excess_minutes')->nullable();
             $table->time('late_hours')->nullable();
-            $table->time('undertime_hours')->nullable();
+            $table->time('undertime_minutes')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();
             $table->softDeletes();

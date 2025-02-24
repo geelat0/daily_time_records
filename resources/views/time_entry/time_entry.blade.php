@@ -48,7 +48,7 @@
 @section('components.specific_page_scripts')
 
 <script>
-
+   
     function updateTime() {
         let now = new Date();
         let hours = now.getHours().toString().padStart(2, '0');  // Keep 24-hour format and pad with zero
@@ -86,37 +86,38 @@
                 $('#pm_time_in').text(formatTime(response.pm_time_in));
                 $('#pm_time_out').text(formatTime(response.pm_time_out));
 
+                let currentHour = new Date().getHours();
+                
                 if (response.am_time_in) {
                     $('#btn-time-in').prop('disabled', true);
-                    // Show AM Time Out button after 5 seconds
-                    setTimeout(function() {
-                        $('#btn-time-in').addClass('d-none');
-                        $('#btn-time-out').removeClass('d-none');
-                    }, 5000); // 5000 milliseconds = 5 seconds
+                }
+
+                if (currentHour > 10) {
+                    $('#btn-time-in').addClass('d-none');
+                    $('#btn-time-out').removeClass('d-none');                
                 }
 
                 if (response.am_time_out) {
                     $('#btn-time-out').prop('disabled', true);
-                    // Show PM Time In button after 5 seconds
-                    setTimeout(function() {
-                        $('#btn-time-out').addClass('d-none');
-                        $('#btn-time-in-pm').removeClass('d-none');
-                    }, 5000); // 5000 milliseconds = 5 seconds
+                }
+
+                if (currentHour > 11) {
+                    $('#btn-time-out').addClass('d-none');
+                    $('#btn-time-in-pm').removeClass('d-none');
                 }
 
                 if (response.pm_time_in) {
                     $('#btn-time-in-pm').prop('disabled', true);
-                    // Show PM Time Out button after 5 seconds
-                    setTimeout(function() {
-                        $('#btn-time-in-pm').addClass('d-none');
-                        $('#btn-time-out-pm').removeClass('d-none');
-                    }, 5000); // 5000 milliseconds = 5 seconds
+                }
+
+                if (currentHour > 15) {
+                    $('#btn-time-in-pm').addClass('d-none');
+                    $('#btn-time-out-pm').removeClass('d-none');
                 }
 
                 if (response.pm_time_out) {
                     $('#btn-time-out-pm').prop('disabled', true);
-                }
-                
+                }   
                 
             },
             error: function(xhr, status, error) {

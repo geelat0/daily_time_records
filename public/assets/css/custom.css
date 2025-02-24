@@ -26,13 +26,13 @@ background: #F97316 !important;
 /* ---------------------------------------Body --------------------------------------- */
 
 /* body{
-    background-color: #faf1ea !important;
+    background-color: #fef9f5 !important;
 } */
 
 /* ---------------------------------------Footer --------------------------------------- */
 
 /* .footer-theme{
-    background-color: #faf1ea !important;
+    background-color: #fef9f5 !important;
 } */
 
 
@@ -40,23 +40,23 @@ background: #F97316 !important;
 
 .time-display {
     text-align: center;
-    color: #ff7a00;
+    color: #F97316;
     font-weight: bold;
 }
 .date-text {
     text-align: center;
     font-style: italic;
-    color: #ff7a00;
+    color: #F97316;
 }
 .btn-time-in {
     border-radius: 10px !important;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
-    background-color: #ff7a00 !important;
+    background-color: #F97316 !important;
     color: white !important;
     border: none !important;
     width: 175px !important;
     height: 49px !important;
-    border: 1px solid #ff7a00 !important;
+    border: 1px solid #F97316 !important;
    
 }
 .btn-time-in-pm {
@@ -108,34 +108,34 @@ background: #F97316 !important;
 .pagination li.active > a:not(.page-link),
 .pagination li.active > a:not(.page-link):hover,
 .pagination li.active > a:not(.page-link):focus {
-  border-color: #ff7a00 !important;
-  background-color: #ff7a00 !important;
+  border-color: #F97316 !important;
+  background-color: #F97316 !important;
   color: #fff !important;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
 }
 
 .pagination .page-item.active .page-link {
-    background-color: #ff7a00 !important;
-    border-color: #ff7a00 !important;
+    background-color: #F97316 !important;
+    border-color: #F97316 !important;
 }
 
 .btn-custom {
-    background-color: #ff7a00 !important;
-    border-color: #ff7a00 !important;
+    background-color: #F97316 !important;
+    border-color: #F97316 !important;
     color: white !important;
     border-radius: 10px !important;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
     width: 100px !important;
     height: 40px !important;
-    border: 1px solid #ff7a00 !important;
+    border: 1px solid #F97316 !important;
     width: 100px !important;
     height: 40px !important;
-    border: 1px solid #ff7a00 !important;
+    border: 1px solid #F97316 !important;
 }
 
 .edit-btn{
-    border-color: #ff7a00 !important;
-    color: #ff7a00 !important;
+    border-color: #F97316 !important;
+    color: #F97316 !important;
     border-radius: 10px !important;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
 }
@@ -149,3 +149,39 @@ background: #F97316 !important;
     cursor: not-allowed;
     border: 1px solid #808080 !important;
 }
+
+.custom-btn-sm {
+    background-color: #F97316 !important;
+}
+.custom-btn-sm:hover{
+    background-color: #F97316 !important;
+}
+
+.custom-text{
+    color: #F97316 !important;
+}
+
+#timesheetTable thead th {
+    font-size: 10px !important; 
+    font-weight: bold !important;
+}
+#timesheetTable tbody td {
+    font-size: 12px !important; 
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #6B7280 !important;
+}
+
+.flatpickr-day.today {
+    border-color:#6B7280 !important;
+}
+
+.flatpickr-day.selected, .flatpickr-day.selected.inRange, .flatpickr-day.selected:focus, .flatpickr-day.selected:hover, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange, .flatpickr-day.startRange.inRange, .flatpickr-day.startRange:focus, .flatpickr-day.startRange:hover, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange, .flatpickr-day.endRange.inRange, .flatpickr-day.endRange:focus, .flatpickr-day.endRange:hover, .flatpickr-day.endRange.nextMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.week.selected {
+    color: #fff !important;
+    background: #F97316 !important;
+    border-color: #F97316 !important;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
