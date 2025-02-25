@@ -21,7 +21,8 @@ class ShiftSeeder extends Seeder
                         'am_time_out' => '17:00:00',
                         'pm_time_in' => '13:00:00',
                         'pm_time_out' => '22:00:00',
-                        'late_threshold' => '08:00:00',
+                        'am_late_threshold' => '08:00:00',
+                        'pm_late_threshold' => '13:00:00',
                         'is_flexi_schedule' => false,
                     ],
                     [
@@ -30,7 +31,8 @@ class ShiftSeeder extends Seeder
                         'am_time_out' => '16:00:00',
                         'pm_time_in' => '13:00:00',
                         'pm_time_out' => '22:00:00',
-                        'late_threshold' => '08:00:00',
+                        'am_late_threshold' => '08:00:00',
+                        'pm_late_threshold' => '13:00:00',
                         'is_flexi_schedule' => false,
                     ],
                     [
@@ -39,7 +41,8 @@ class ShiftSeeder extends Seeder
                         'am_time_out' => '06:00:00',
                         'pm_time_in' => '02:00:00',
                         'pm_time_out' => '03:00:00',
-                        'late_threshold' => '22:00:00',
+                        'am_late_threshold' => '22:00:00',
+                        'pm_late_threshold' => '02:00:00',
                         'is_flexi_schedule' => false,
                     ],
                     [
@@ -48,7 +51,8 @@ class ShiftSeeder extends Seeder
                         'am_time_out' => '17:30:00',
                         'pm_time_in' => '13:00:00',
                         'pm_time_out' => '22:00:00',
-                        'late_threshold' => '08:00:00',
+                        'am_late_threshold' => '08:30:00',
+                        'pm_late_threshold' => '13:00:00',
                         'is_flexi_schedule' => true,
                     ],
                 ];

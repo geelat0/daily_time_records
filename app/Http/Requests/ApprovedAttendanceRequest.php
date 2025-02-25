@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TimeEntryRequest extends FormRequest
+class ApprovedAttendanceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,12 @@ class TimeEntryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:time_entries,id',
-            'am_time_in' => 'nullable|date_format:H:i',
-            'am_time_out' => 'nullable|date_format:H:i',
-            'pm_time_in' => 'nullable|date_format:H:i',
-            'pm_time_out' => 'nullable|date_format:H:i',
+            'user_id' => 'required',
+            'dates' => 'required|json',
+            'attendance_type' => 'required|string',
+            'file_path' => 'nullable|string',
+            'file_name' => 'nullable|string',
+            'remarks' => 'nullable|string',
         ];
     }
 }

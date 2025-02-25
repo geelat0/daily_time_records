@@ -19,4 +19,5 @@ Route::post('/update_time_out_pm', [TimeEntryController::class, 'updateTimeOutPM
 
 Route::get('/time_entries', [TimeEntryController::class, 'getTimeEntries'])->name('time_entries');
 
+Route::post('/update/time/entry', [TimeSheetController::class, 'updateTimeEntry'])->name('update.time.entry');
 

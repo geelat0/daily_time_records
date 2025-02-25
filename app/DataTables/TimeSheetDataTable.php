@@ -40,24 +40,28 @@ class TimeSheetDataTable extends DataTable
                 return $row->am_time_in ? Carbon::parse($row->am_time_in)->format('H:i') : '';
             })
             ->editColumn('pm_time_out', function ($row) {
-                return $row->pm_time_out ?? '';
+                return $row->pm_time_out ? Carbon::parse($row->pm_time_out)->format('H:i') : '';
             })
             ->editColumn('am_time_out', function ($row) {
-                return $row->am_time_out ?? '';
+                return $row->am_time_out ? Carbon::parse($row->am_time_out)->format('H:i') : '';
             })
             ->editColumn('pm_time_in', function ($row) {
-                return $row->pm_time_in ?? '';
+                return $row->pm_time_in ? Carbon::parse($row->pm_time_in)->format('H:i') : '';
             })
             ->editColumn('rendered_hours', function ($row) {
-                return $row->rendered_hours ?? '0.0.0';
+                return $row->rendered_hours ?  Carbon::parse($row->rendered_hours)->format('H:i') : '00:00';
             })
             ->editColumn('excess_minutes', function ($row) {
-                return $row->excess_minutes ?? '0.0.0';
+                return $row->excess_minutes ?  Carbon::parse($row->excess_minutes)->format('H:i') : '00:00';
             })
             ->editColumn('late_hours', function ($row) {
-                return $row->late_hours ?? '0.0.0';
+                return $row->late_hours ?  Carbon::parse($row->late_hours)->format('H:i') : '00:00';
             })
             ->editColumn('remarks', function ($row) {
+                $day = $row->created_at ? $row->created_at->format('D') : Carbon::parse($row->temp_date)->format('D');
+                if ($day == 'Sat' || $day == 'Sun') {
+                    return '<span style="color: #F05655; font-style:italic">Rest Day</span>';
+                }
                 return $row->remarks ?? '';
             })
             ->addColumn('Edit', function ($row) {
@@ -66,7 +70,7 @@ class TimeSheetDataTable extends DataTable
             ->addColumn('attachments', function ($row) {
                 return '';
             })
-            ->rawColumns(['Day', 'Edit']);
+            ->rawColumns(['Day', 'Edit', 'remarks']);
 
     }
 
@@ -75,25 +79,35 @@ class TimeSheetDataTable extends DataTable
      */
     public function query(TimeEntries $model): QueryBuilder
     {
-        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
-        $dates = [];
-    
-        for ($day = 1; $day <= $daysInMonth; $day++) {
-            $date = now()->startOfMonth()->addDays($day - 1);
-            $dates[] = [
-                'day' => $day,
-                'date' => $date->format('Y-m-d'),
-            ];
+
+        $startDate = request('start_date');
+        $endDate = request('end_date');
+
+        if (!$startDate || !$endDate) {
+            $startDate = now()->startOfMonth()->format('Y-m-d');
+            $endDate = now()->endOfMonth()->format('Y-m-d');
         }
-        
+
+        $dates = [];
+        $currentDate = Carbon::parse($startDate);
+
+        while ($currentDate->format('Y-m-d') <= $endDate) {
+            $dates[] = [
+                'day' => $currentDate->day,
+                'date' => $currentDate->format('Y-m-d'),
+            ];
+            $currentDate->addDay();
+        }
+
         $tempDatesQuery = implode(' UNION ALL SELECT ', array_map(function($date) {
             return "'{$date['day']}' as day, '{$date['date']}' as date";
         }, $dates));
-        
+
         return $model->newQuery()
             ->select('time_entries.*', 'temp_dates.day as temp_day', 'temp_dates.date as temp_date')
             ->from(DB::raw("(SELECT $tempDatesQuery) as temp_dates"))
-            ->leftJoin('time_entries', DB::raw('DATE(time_entries.created_at)'), '=', 'temp_dates.date');
+            ->leftJoin('time_entries', DB::raw('DATE(time_entries.created_at)'), '=', 'temp_dates.date')
+            ->whereBetween('temp_dates.date', [$startDate, $endDate]);
     }
 
     /**

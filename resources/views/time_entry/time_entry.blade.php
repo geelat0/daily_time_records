@@ -99,7 +99,7 @@
 
                 if (response.am_time_out) {
                     $('#btn-time-out').prop('disabled', true);
-                }
+                } 
 
                 if (currentHour > 11) {
                     $('#btn-time-out').addClass('d-none');
@@ -110,7 +110,7 @@
                     $('#btn-time-in-pm').prop('disabled', true);
                 }
 
-                if (currentHour > 15) {
+                if (currentHour > 14) {
                     $('#btn-time-in-pm').addClass('d-none');
                     $('#btn-time-out-pm').removeClass('d-none');
                 }

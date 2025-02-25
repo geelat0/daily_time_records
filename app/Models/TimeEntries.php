@@ -42,4 +42,6 @@ class TimeEntries extends Model
             ->whereDate('created_at', today())
             ->first();
     }
+
+    
 }

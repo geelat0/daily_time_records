@@ -2,11 +2,6 @@
 
 @section('content')
 
-<style>
-
-
-</style>
-
 {{-- Page Title --}}
 <div class="row mb-2 mt-4">
     <div class="col-md">
@@ -71,49 +66,54 @@
     static: true
     });
        // Initialize DataTable
-       const tableTimeSheet = $('#timesheetTable').DataTable({
-            processing: false,
-            serverSide: false,
-            searching: false,
-            ajax: {
-                data: function(d) {
-                    // Include the date range in the AJAX request
-                    d.start_date = $('#startDate').val();
-                    d.end_date = $('#endDate').val();
-                },
+    const tableTimeSheet = $('#timesheetTable').DataTable({
+        processing: false,
+        serverSide: false,
+        searching: false,
+        ajax: {
+            data: function(d) {
+                // Include the date range in the AJAX request
+                d.start_date = $('#startDate').val();
+                d.end_date = $('#endDate').val();
             },
-            ordering: false,
-            lengthMenu: [ [10, 25, 50, 100, 500, -1], [10, 25, 50, 100, 500, "All"] ],
-            pageLength: 10,
-            columns: [
-                { data: 'id', name: 'id', title: 'ID', visible: false },
-                { data: 'Day', name: 'Day', title: 'Date' },
-                { data: 'am_time_in', name: 'am_time_in', title: 'AM Time In' },
-                { data: 'am_time_out', name: 'am_time_out', title: 'AM Time Out' },
-                { data: 'pm_time_in', name: 'pm_time_in', title: 'PM Time In' },
-                { data: 'pm_time_out', name: 'pm_time_out', title: 'PM Time Out' },
-                { data: 'late_hours', name: 'late_hours', title: 'Late' },
-                { data: 'rendered_hours', name: 'rendered_hours', title: 'Rendered Hours' },
-                { data: 'excess_minutes', name: 'excess_minutes', title: 'Excess Minutes' },
-                { data: 'remarks', name: 'remarks', title: 'Remarks' },
-                { 
-                    data: 'attachments', 
-                    name: 'attachments', 
-                    title: 'Attachments', 
-                    render: function(data, type, row) {
-                        return `<a href="/return/${row.id}" class="text-decoration-underline fst-italic">File Name Here</a>`;
-                    } 
-                },
-                { 
-                    data: 'id', 
-                    name: 'actions', 
-                    title: 'Action', 
-                    render: function(data, type, row) {
-                        return `<a href="/return/${row.id}" class="text-decoration-underline fst-italic custom-text">Edit</a>`;
-                    } 
-                },
-               
-            ],
-        });
+        },
+        ordering: false,
+        lengthMenu: [ [10, 25, 50, 100, 500, -1], [10, 25, 50, 100, 500, "All"] ],
+        pageLength: 10,
+        columns: [
+            { data: 'id', name: 'id', title: 'ID', visible: false },
+            { data: 'Day', name: 'Day', title: 'Date' },
+            { data: 'am_time_in', name: 'am_time_in', title: 'AM Time In' },
+            { data: 'am_time_out', name: 'am_time_out', title: 'AM Time Out' },
+            { data: 'pm_time_in', name: 'pm_time_in', title: 'PM Time In' },
+            { data: 'pm_time_out', name: 'pm_time_out', title: 'PM Time Out' },
+            { data: 'late_hours', name: 'late_hours', title: 'Late' },
+            { data: 'rendered_hours', name: 'rendered_hours', title: 'Rendered Hours' },
+            { data: 'excess_minutes', name: 'excess_minutes', title: 'Excess Minutes' },
+            { data: 'remarks', name: 'remarks', title: 'Remarks' },
+            { 
+                data: 'attachments', 
+                name: 'attachments', 
+                title: 'Attachments', 
+                render: function(data, type, row) {
+                    return `<a href="/return/${row.id}" class="text-decoration-underline fst-italic">File Name Here</a>`;
+                } 
+            },
+            { 
+                data: 'id', 
+                name: 'actions', 
+                title: 'Action', 
+                render: function(data, type, row) {
+                    return `<a href="/return/${row.id}" class="text-decoration-underline fst-italic custom-text">Edit</a>`;
+                } 
+            },
+            
+        ],
+    });
+
+         // Reload DataTable on date change
+    $('#startDate, #endDate').change(function() {
+        tableTimeSheet.ajax.reload();
+    });
 </script>
 @endsection

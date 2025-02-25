@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TimeEntryRequest;
+use App\Http\Resources\TimeEntryResouce;
+use App\Models\Shifts;
+use App\Models\ShiftSchedule;
 use App\Models\TimeEntries;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,9 +47,17 @@ class TimeEntryController extends Controller
 
     public function updateTimeInPM(Request $request)
     {
-        $timeEntry = TimeEntries::find($request->id);
+        $userId = 1; 
+        $date = now()->format('Y-m-d');
+    
+        $timeEntry = TimeEntries::firstOrNew(
+            ['user_id' => $userId, 'created_at' => $date],
+            ['pm_time_in' => $request->pm_time_in]
+        );
+    
         $timeEntry->pm_time_in = $request->pm_time_in;
         $timeEntry->save();
+    
 
         return response()->json(
             $timeEntry,
@@ -75,4 +88,7 @@ class TimeEntryController extends Controller
             200
         );
     }
+
+    
+  
 }

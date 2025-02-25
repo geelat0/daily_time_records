@@ -18,7 +18,8 @@ return new class extends Migration
             $table->time('am_time_out')->nullable();
             $table->time('pm_time_in')->nullable();
             $table->time('pm_time_out')->nullable();
-            $table->time('late_threshold')->nullable();
+            $table->time('am_late_threshold')->nullable();
+            $table->time('pm_late_threshold')->nullable();
             $table->boolean('is_flexi_schedule')->default(false);
             $table->timestamps();
             $table->softDeletes();

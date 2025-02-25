@@ -13,7 +13,6 @@ class ApprovedAttendance extends Model
 
     protected $fillable = [
         'user_id',
-        'time_entry_id',
         'dates',
         'attendance_type',
         'file_path',

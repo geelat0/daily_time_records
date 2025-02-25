@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('approved_attendance', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->foreignId('time_entry_id')->constrained('time_entries');
             $table->json('dates')->nullable();
             $table->string('attendance_type')->nullable();
+            $table->longText('file')->nullable();
             $table->string('file_path')->nullable();
             $table->string('file_name')->nullable();
             $table->string('remarks')->nullable();

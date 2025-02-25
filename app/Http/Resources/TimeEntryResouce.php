@@ -18,10 +18,10 @@ class TimeEntryResouce extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => Auth::user()->id,
-            'time_in' => $this->time_in,
-            'break_out' => $this->time_out,
-            'break_in' => $this->time_in_pm,
-            'time_out' => $this->time_out_pm,
+            'time_in' => $this->am_time_in,
+            'break_out' => $this->am_time_out,
+            'break_in' => $this->pm_time_in,
+            'time_out' => $this->pm_time_out,
         ];
     }
 }
