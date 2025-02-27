@@ -22,6 +22,17 @@
 background: #F97316 !important;
 }
 
+/* ---------------------------------------Custom Sidebar --------------------------------------- */
+.layout-menu-detached {
+    position: absolute !important;
+    top: 20px !important;
+    left: 20px !important;
+    width: 250px !important;
+    background: #fff !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 8px !important;
+}
+
 
 /* ---------------------------------------Body --------------------------------------- */
 
@@ -41,7 +52,7 @@ background: #F97316 !important;
 .time-display {
     text-align: center;
     color: #F97316;
-    font-weight: bold;
+    font-weight: bold; 
 }
 .date-text {
     text-align: center;
@@ -85,12 +96,12 @@ background: #F97316 !important;
 .btn-time-out-pm {
     border-radius: 10px !important;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
-    background-color: #9A23FC !important;
+    background-color: #fc6423 !important;
     color: white !important;
     border: none !important;
     width: 175px !important;
     height: 49px !important;
-    border: 1px solid #9A23FC !important;
+    border: 1px solid #fc6423 !important;
     
 }
 .record-card {
@@ -140,6 +151,7 @@ background: #F97316 !important;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1) !important;
 }
 
+
 .btn-time-in:disabled,
 .btn-time-out:disabled,
 .btn-time-in-pm:disabled,
@@ -167,6 +179,23 @@ background: #F97316 !important;
 }
 #timesheetTable tbody td {
     font-size: 12px !important; 
+    font-weight: regular !important;
+
+}
+
+#settingTable thead th {
+    font-size: 10px !important; 
+    font-weight: bold !important;
+}
+#settingTable tbody td {
+    font-size: 12px !important; 
+    font-weight: regular !important;
+
+}
+
+.delete-text{
+    color: #F05655 !important;
+   
 }
 
 .form-control:focus,
@@ -188,6 +217,56 @@ background: #F97316 !important;
 .rest-day{
     color: #F05655 !important;
     font-style: italic;
+}
+
+/* ---------------------------------------Approve Attendance --------------------------------------- */
+
+
+.is-invalid {
+    border: 1px solid red !important;
+    background-color: #ffe6e6;
+}
+.btn-warning{
+    background-color: #F97316 !important;
+    color: #ffff !important;
+}
+
+.btn-warning:hover{
+    background-color: #F97316 !important;
+    color: #ffff !important;
+}
+
+.btn-secondary{
+    background-color: transparent !important;
+    color: #F97316 !important;
+    border: 1px solid #F97316 !important;
+}
+
+.btn-secondary:hover{
+    background-color: #f974162a !important;
+    color: #F97316 !important;
+    border: 1px solid #F97316 !important;
+}
+
+.text-bg-warning{
+    background-color: #F97316 !important;
+}
+
+.custom-icon{
+    color: #F97316 !important;
+}
+
+label.required::after {
+    content: " *";
+    color: red;
+  }
+
+.flatpickr-date{
+    font-size: 11px;
+}
+
+.layout-menu{
+    width: 8rem !important;
 }
 
 

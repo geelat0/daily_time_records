@@ -15,9 +15,10 @@ class ApprovedAttendance extends Model
         'user_id',
         'dates',
         'attendance_type',
+        'file',
         'file_path',
         'file_name',
-        'notes',
+        'remarks',
     ];
 
     public function timeEntry()

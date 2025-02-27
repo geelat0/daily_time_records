@@ -43,5 +43,14 @@ class TimeEntries extends Model
             ->first();
     }
 
+    public static function TimeEntries()
+    {
+        return self::where('user_id', 1)
+            ->whereDate('created_at', today())
+            ->get();
+    }
+
+    
+
     
 }

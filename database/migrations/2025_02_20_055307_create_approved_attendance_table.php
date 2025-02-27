@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('file')->nullable();
             $table->string('file_path')->nullable();
             $table->string('file_name')->nullable();
-            $table->string('remarks')->nullable();
+            $table->longText('remarks')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

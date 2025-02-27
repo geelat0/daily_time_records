@@ -15,18 +15,25 @@ class TimeEntryController extends Controller
 {
     
     public function index()
-    {
-        return view('time_entry.time_entry');
+    { 
+        return view('pages.time_entry');
     }
 
     public function updateTimeIn(Request $request)
     {
+        
+        // Check if a time entry for today exists
+        $timeEntry = TimeEntries::getTimeEntries();
 
-        $timeEntry = New TimeEntries();
-        $timeEntry->user_id = 1;
-        $timeEntry->am_time_in = $request->am_time_in;
+        if ($timeEntry) {
+            $timeEntry->am_time_in = $request->am_time_in;
+        }else{
+            $timeEntry = New TimeEntries();
+            $timeEntry->user_id = 1;
+            $timeEntry->am_time_in = $request->am_time_in;
+        }
         $timeEntry->save();
-
+        
         return response()->json(
             $timeEntry,
             200
@@ -47,15 +54,18 @@ class TimeEntryController extends Controller
 
     public function updateTimeInPM(Request $request)
     {
-        $userId = 1; 
-        $date = now()->format('Y-m-d');
     
-        $timeEntry = TimeEntries::firstOrNew(
-            ['user_id' => $userId, 'created_at' => $date],
-            ['pm_time_in' => $request->pm_time_in]
-        );
-    
-        $timeEntry->pm_time_in = $request->pm_time_in;
+       // Check if a time entry for today exists
+        $timeEntry = TimeEntries::getTimeEntries();
+
+        if ($timeEntry) {
+            $timeEntry->pm_time_in = $request->pm_time_in;
+        } else {
+            $timeEntry = new TimeEntries();
+            $timeEntry->user_id = 1;
+            $timeEntry->pm_time_in = $request->pm_time_in;
+        }
+
         $timeEntry->save();
     
 
@@ -88,6 +98,32 @@ class TimeEntryController extends Controller
             200
         );
     }
+
+    public function checkShiftSchedule()
+    {
+        $check = ShiftSchedule::hasTodayShiftSchedule(1);
+
+        $timeEntry = TimeEntries::getTimeEntries();
+
+        if($check && !$timeEntry){
+            $timeEntry = New TimeEntries();
+            $timeEntry->user_id = 1;
+            $timeEntry->shift_schedule_id = $check->id;
+            $timeEntry->save();
+        }else{
+            if($check){
+                $timeEntry->shift_schedule_id = $check->id;
+                $timeEntry->save();
+            }
+        }
+
+        return response()->json(
+            $timeEntry,
+            200
+        );
+    }
+
+
 
     
   

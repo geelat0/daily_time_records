@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\TimeSheetDataTable;
 use App\Http\Requests\TimeEntryRequest;
 use App\Http\Resources\TimeEntryResouce;
+use App\Models\AttendanceType;
 use App\Models\Shifts;
 use App\Models\ShiftSchedule;
 use App\Models\TimeEntries;
@@ -16,7 +17,7 @@ class TimeSheetController extends Controller
 {
     public function index(TimeSheetDataTable $dataTable)
     {
-        return $dataTable->render('time_sheet.time_sheet');
+        return $dataTable->render('pages.time_sheet');
     }
 
     public function computeTimes($timeEntry)
@@ -66,7 +67,6 @@ class TimeSheetController extends Controller
             $shiftPmTimeOut = $shift->pm_time_out ? Carbon::parse($shift->pm_time_out) : null;
             $AMlateThreshold = $shift->am_late_threshold ? Carbon::parse($shift->am_late_threshold) : null;
             $PMlateThreshold = $shift->pm_late_threshold ? Carbon::parse($shift->pm_late_threshold) : null;
-
 
             // Calculate late hours using late_threshold
             if ($amTimeIn && $AMlateThreshold && $amTimeIn->greaterThan($AMlateThreshold)) {
@@ -137,9 +137,7 @@ class TimeSheetController extends Controller
 
     public function computeTimeEntries()
     {
-        $timeEntries = TimeEntries::where('user_id', 1)
-            ->whereDate('created_at', today())
-            ->get();
+        $timeEntries = TimeEntries::TimeEntries();
 
         foreach ($timeEntries as $timeEntry) {
             $this->computeTimes($timeEntry);
@@ -172,6 +170,13 @@ class TimeSheetController extends Controller
         $this->computeTimes($timeEntry);
 
         return new TimeEntryResouce($timeEntry);
+    }
+
+    public function getAttendanceType()
+    {
+        $attendanceType = AttendanceType::getAttendanceType();
+
+        return $attendanceType;
     }
 
     

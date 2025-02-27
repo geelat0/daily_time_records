@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('shift_schedule_id')->nullable();
             $table->unsignedBigInteger('approved_attendance')->nullable();
+            $table->unsignedBigInteger('attendance_type_id')->nullable();
             $table->time('am_time_in')->nullable();
             $table->time('am_time_out')->nullable();
             $table->time('pm_time_in')->nullable();

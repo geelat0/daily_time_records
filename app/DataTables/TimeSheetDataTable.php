@@ -65,12 +65,13 @@ class TimeSheetDataTable extends DataTable
                 return $row->remarks ?? '';
             })
             ->addColumn('Edit', function ($row) {
-                return '<button class="btn btn-custom">Edit</button>';
+                return '<a href="/return/${row.id}" class="text-decoration-underline fst-italic custom-text">Edit</a>';
+
             })
             ->addColumn('attachments', function ($row) {
-                return '';
+                return '<a href="/return/${row.id}" class="text-decoration-underline fst-italic">File Name Here</a>';
             })
-            ->rawColumns(['Day', 'Edit', 'remarks']);
+            ->rawColumns(['Day', 'Edit', 'remarks', 'attachments']);
 
     }
 
@@ -118,11 +119,18 @@ class TimeSheetDataTable extends DataTable
         return $this->builder()
                     ->setTableId('timesheetTable')
                     ->columns($this->getColumns())
-                    ->minifiedAjax()
+                    ->ajax(
+                        ['data' => 'function(d) {
+                            
+                            d.start_date = $("#startDate").val();
+                            d.end_date = $("#endDate").val();
+                        }'
+                    ])
+                    
                     ->dom('rtip')
                     ->ordering(false) // Disable sorting
-                    ->pageLength(31) // Show 31 rows (for months with 31 days)
-                    ->lengthMenu([31]); // Only allow 31 rows option
+                    ->pageLength(10) // Show 10 rows by default
+                    ->lengthMenu([[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]); // Allow multiple options for rows
                   
     }
 
@@ -142,6 +150,7 @@ class TimeSheetDataTable extends DataTable
             Column::make('excess_minutes'),
             Column::make('late_hours'),
             Column::make('remarks'),
+            Column::make('attachments'),
             Column::make('Edit'),
             // Column::make('Action'),
         ];

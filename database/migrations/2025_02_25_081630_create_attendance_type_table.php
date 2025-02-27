@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shift_schedules', function (Blueprint $table) {
+        Schema::create('attendance_type', function (Blueprint $table) {
             $table->id();
-            $table->json('dates');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('shift_id');
-            $table->longtext('remarks');
-            $table->string('status');
+            $table->string('type');
+            $table->string('code');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shift_schedules');
+        Schema::dropIfExists('attendance_type');
     }
 };

@@ -1,4 +1,4 @@
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme layout-menu-detached">
     <div class="app-brand demo">
       <a href="#" class="app-brand-link">
         <img src="{{asset('assets/img/branding/bear-logo-dswd.png')}}" class="app-brand-logo w-px-30 h-auto me-2 " alt="logo" />
@@ -8,9 +8,9 @@
             </span>
       </a>
 
-      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto ">
+      {{-- <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto ">
         <i class="bx bx-chevron-left bx-sm align-middle sidebar-menu-toggle"></i>
-      </a>
+      </a> --}}
     </div>
 
     <div class="menu-inner-shadow"></div>
@@ -32,5 +32,17 @@
           <div class="text-truncate" data-i18n="Page 1">View Time Sheet</div>
         </a>
       </li>
+
+      {{-- <li class="menu-header small">
+        <span class="menu-header-text" data-i18n="Apps & Pages">Settings</span>
+      </li> --}}
+
+      <li class="menu-item {{ request()->is('setting') ? 'active' : '' }}">
+        <a href="/setting" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-cog"></i>
+          <div class="text-truncate" data-i18n="Page 1">Settings</div>
+        </a>
+      </li>
     </ul>
-  </aside>
+</aside>
+

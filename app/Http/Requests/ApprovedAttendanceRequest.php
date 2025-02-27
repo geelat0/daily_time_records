@@ -9,10 +9,10 @@ class ApprovedAttendanceRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return false;
-    }
+    // public function authorize(): bool
+    // {
+    //     return false;
+    // }
 
     /**
      * Get the validation rules that apply to the request.
@@ -23,11 +23,14 @@ class ApprovedAttendanceRequest extends FormRequest
     {
         return [
             'user_id' => 'required',
-            'dates' => 'required|json',
+            'start_date' => 'required',
+            'end_date' => 'required',
             'attendance_type' => 'required|string',
-            'file_path' => 'nullable|string',
-            'file_name' => 'nullable|string',
-            'remarks' => 'nullable|string',
+            'file' => 'required|mimes:pdf,jpeg,png,jpg,gif',
+            'file_path' => 'nullable',
+            'file_name' => 'nullable',
+            'remarks' => 'required|string',
+            'dates' => 'nullable',
         ];
     }
 }
