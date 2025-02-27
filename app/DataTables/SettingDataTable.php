@@ -30,17 +30,10 @@ class SettingDataTable extends DataTable
                 
             })
             ->addColumn('effectivity', function ($row) {
-                $datesArray = json_decode($row->dates, true); // Decode the JSON dates
-                if (is_array($datesArray) && count($datesArray) > 0) {
-                    $startDate = Carbon::parse($datesArray[0])->format('F j, Y'); // Format start date
-                    $endDate = Carbon::parse(end($datesArray))->format('F j, Y'); // Format end date
-                    return "{$startDate} - {$endDate}"; 
-                }
-                return ''; 
-                
+                return Carbon::parse($row->start_date)->format('F j, Y'). '-' .Carbon::parse($row->end_date)->format('F j, Y'); // Changed format to Month Name Day, Year
+
             })
             ->addColumn('schedule', function ($row) {
-                // dd($row->shift);
                 $amTimeIn = $row->shift->am_time_in ?  Carbon::parse($row->shift->am_time_in)->format('H:i') : ''; // Format AM time in
                 $amTimeOut = $row->shift->am_time_out ? Carbon::parse($row->shift->am_time_out)->format('H:i'): ''; // Format AM time out
                 $pmTimeIn = $row->shift->pm_time_in ? Carbon::parse($row->shift->pm_time_in)->format('H:i') : ''; // Format PM time in

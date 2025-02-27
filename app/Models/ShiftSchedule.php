@@ -37,7 +37,8 @@ class ShiftSchedule extends Model
         $today = Carbon::today()->toDateString();
 
         return self::where('user_id', $userId)
-            ->whereJsonContains('dates', $today)
+            ->where('start_date', '<=', $today)
+            ->where('end_date', '>=', $today)
             ->first();
     }
     

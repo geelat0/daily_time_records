@@ -251,11 +251,11 @@
                     <div class="d-flex justify-content-between align-items-center gap-2">
                         <div class="mb-3 w-100">
                             <label class="form-label">Start Date</label>
-                            <input type="text" class="form-control form-control-sm dynamic-date-range-field" placeholder="MM-DD-YYYY" />
+                            <input type="text" class="form-control form-control-sm dynamic-date-range-field" placeholder="MM-DD-YYYY" name="start_date[${fieldCount}]" />
                         </div>
                         <div class="mb-3 w-100">
                             <label class="form-label">End Date</label>
-                            <input type="text" class="form-control form-control-sm dynamic-date-range-field" placeholder="MM-DD-YYYY" />
+                            <input type="text" class="form-control form-control-sm dynamic-date-range-field" placeholder="MM-DD-YYYY" name="end_date[${fieldCount}]" />
                         </div>
                     </div>
                 </div>`;
@@ -277,18 +277,6 @@
             $(".date-range-card .date-range-count").each(function () {
                 $(this).text(fieldCount++);
             });
-        }
-
-        function generateDateRange(startDate, endDate) {
-            let dates = [];
-            let currentDate = new Date(startDate);
-
-            while (currentDate <= new Date(endDate)) {
-                dates.push(currentDate.toISOString().split('T')[0]);
-                currentDate.setDate(currentDate.getDate() + 1);
-            }
-
-            return dates;
         }
 
         function displayValidationErrors(errors) {

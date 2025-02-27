@@ -24,6 +24,10 @@
         </div>
     </div>
 </div>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addApproveAttendanceModal">
+    Launch demo modal
+</button>
+  
 
 <!-- Add Approve Attendance/Absence Modal -->
 <div class="modal fade" id="addApproveAttendanceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -35,6 +39,7 @@
         </div>
         <div class="modal-body">
             <form id="approveAttendanceForm">
+                @csrf
                 <div class="row mb-4">
                     <div class="col-md">
                         <div class="card bg-label-secondary shadow-none p-2 mb-2" id="dateRangeCardField">
@@ -44,11 +49,11 @@
                             <div class="d-flex justify-content-between align-items-center gap-2">
                                 <div class="mb-3 w-100">
                                     <label for="startDateApproveAttendance" class="form-label required">Start Date </label>
-                                    <input type="text" class="form-control form-control-sm" placeholder="MM-DD-YYYY" id="startDateApproveAttendance" name="start_date" />
+                                    <input type="text" class="form-control form-control-sm" placeholder="MM-DD-YYYY" id="startDateApproveAttendance" name="start_date[1]" />
                                 </div>
                                 <div class="mb-3 w-100">
                                     <label for="endDateApproveAttendance" class="form-label required">End Date </label>
-                                    <input type="text" class="form-control form-control-sm" placeholder="MM-DD-YYYY" id="endDateApproveAttendance" name="end_date"/>
+                                    <input type="text" class="form-control form-control-sm" placeholder="MM-DD-YYYY" id="endDateApproveAttendance" name="end_date[1]"/>
                                 </div>
                             </div>
                         </div>
@@ -135,11 +140,6 @@
             e.preventDefault();
             let formData = new FormData(this);
 
-            let startDate = $('#startDateApproveAttendance').val();
-            let endDate = $('#endDateApproveAttendance').val();
-            let dateRange = generateDateRange(startDate, endDate);
-            formData.append('dates', JSON.stringify(dateRange));
-
             $("input, select, textarea").on("input change", function () {
                 $(this).removeClass("is-invalid");
                 $(this).next(".error-msg").remove();
@@ -151,9 +151,7 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
+              
                 success: function (response) {
                     console.log(response);
                 },

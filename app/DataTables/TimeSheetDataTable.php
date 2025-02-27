@@ -24,6 +24,7 @@ class TimeSheetDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+
         return (new EloquentDataTable($query))
             ->editColumn('id', function ($row) {
                 return $row->id ?? '';
@@ -35,6 +36,13 @@ class TimeSheetDataTable extends DataTable
                     return Carbon::parse($row->temp_date)->format('D, M d');
                 }
                 
+            })
+            ->editColumn('schedule', function ($row) {
+                $amTimeIn = $row->shiftSchedule->shift->am_time_in ?? '';
+                $amTimeOut = $row->shiftSchedule->shift->am_time_out ?? '';
+                $pmTimeIn = $row->shiftSchedule->shift->pm_time_in ?? '';
+                $pmTimeOut = $row->shiftSchedule->shift->pm_time_out ?? '';
+                return $amTimeIn. ' - ' . $amTimeOut. ' ' . $pmTimeIn. ' - ' . $pmTimeOut;
             })
             ->editColumn('am_time_in', function ($row) {
                 return $row->am_time_in ? Carbon::parse($row->am_time_in)->format('H:i') : '';
@@ -68,10 +76,10 @@ class TimeSheetDataTable extends DataTable
                 return '<a href="/return/${row.id}" class="text-decoration-underline fst-italic custom-text">Edit</a>';
 
             })
-            ->addColumn('attachments', function ($row) {
-                return '<a href="/return/${row.id}" class="text-decoration-underline fst-italic">File Name Here</a>';
-            })
-            ->rawColumns(['Day', 'Edit', 'remarks', 'attachments']);
+            ->addColumn('attachment', function ($row) {
+                return '<a href="data:application/octet-stream;base64,' . $row->file_path . '" class="text-decoration-underline fst-italic" download="' . $row->file_name . '">' . $row->file_name . '</a>';})
+
+            ->rawColumns(['Day', 'Edit', 'remarks', 'attachment']);
 
     }
 
@@ -80,7 +88,6 @@ class TimeSheetDataTable extends DataTable
      */
     public function query(TimeEntries $model): QueryBuilder
     {
-
         $startDate = request('start_date');
         $endDate = request('end_date');
 
@@ -105,10 +112,15 @@ class TimeSheetDataTable extends DataTable
         }, $dates));
 
         return $model->newQuery()
-            ->select('time_entries.*', 'temp_dates.day as temp_day', 'temp_dates.date as temp_date')
+            ->select('time_entries.*', 'temp_dates.day as temp_day', 'temp_dates.date as temp_date', 'approved_attendance.file_name', 'approved_attendance.file_path')
             ->from(DB::raw("(SELECT $tempDatesQuery) as temp_dates"))
             ->leftJoin('time_entries', DB::raw('DATE(time_entries.created_at)'), '=', 'temp_dates.date')
+            ->leftJoin('approved_attendance', function ($join) {
+                $join->on(DB::raw('DATE_FORMAT(temp_dates.date, "%Y-%m-%d")'), '>=', 'approved_attendance.start_date')
+                     ->on(DB::raw('DATE_FORMAT(temp_dates.date, "%Y-%m-%d")'), '<=', 'approved_attendance.end_date');
+            })
             ->whereBetween('temp_dates.date', [$startDate, $endDate]);
+
     }
 
     /**
@@ -129,8 +141,7 @@ class TimeSheetDataTable extends DataTable
                     
                     ->dom('rtip')
                     ->ordering(false) // Disable sorting
-                    ->pageLength(10) // Show 10 rows by default
-                    ->lengthMenu([[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]); // Allow multiple options for rows
+                    ->pageLength(10); // Show 10 rows by default
                   
     }
 
@@ -142,15 +153,16 @@ class TimeSheetDataTable extends DataTable
         return [
             Column::make('id')->hidden(),
             Column::make('Day'),
+            // Column::make('schedule'),
             Column::make('am_time_in'),
             Column::make('am_time_out'),
             Column::make('pm_time_in'),
             Column::make('pm_time_out'),
-            Column::make('rendered_hours'),
-            Column::make('excess_minutes'),
-            Column::make('late_hours'),
+            Column::make('rendered_hours')->title('Rendered'),
+            Column::make('excess_minutes')->title('Excess'),
+            Column::make('late_hours')->title('Late'),
             Column::make('remarks'),
-            Column::make('attachments'),
+            Column::make('attachment'),
             Column::make('Edit'),
             // Column::make('Action'),
         ];

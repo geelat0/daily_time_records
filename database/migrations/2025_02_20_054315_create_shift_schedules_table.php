@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('shift_schedules', function (Blueprint $table) {
             $table->id();
-            $table->json('dates');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('shift_id');
             $table->longtext('remarks');

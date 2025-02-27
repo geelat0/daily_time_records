@@ -17,7 +17,8 @@ class ShiftScheduleSeeder extends Seeder
 
         // foreach ($shiftIds as $shiftId) {
             DB::table('shift_schedules')->insert([
-                'dates' => json_encode(['2025-02-25', '2025-02-26', '2025-02-27']),
+                'start_date' => now(),
+                'end_date' => now(),
                 'shift_id' => $shiftId,
                 'user_id' => 1,
                 'remarks' => '',

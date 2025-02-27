@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('approved_attendance', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->json('dates')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->string('attendance_type')->nullable();
             $table->longText('file')->nullable();
             $table->string('file_path')->nullable();

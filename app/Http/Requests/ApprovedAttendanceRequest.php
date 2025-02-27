@@ -23,8 +23,8 @@ class ApprovedAttendanceRequest extends FormRequest
     {
         return [
             'user_id' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
+            'start_date.*' => 'required',
+            'end_date.*' => 'required',
             'attendance_type' => 'required|string',
             'file' => 'required|mimes:pdf,jpeg,png,jpg,gif',
             'file_path' => 'nullable',
